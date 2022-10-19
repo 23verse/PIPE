@@ -39,7 +39,7 @@ if(!("BiocManager" %in% rownames(installed.packages()))) install.packages("BiocM
 BiocManager::install(c('remotes','tidyverse'), dependencies=T)
 
 # then, install the package 'PIPE' (now hosted at github)
-BiocManager::install("hfang-bristol/PIPE", dependencies=T, force=T)
+BiocManager::install("23verse/PIPE", dependencies=T, force=T)
 
 # check the package 'PIPE' successfully installed
 library(PIPE)
