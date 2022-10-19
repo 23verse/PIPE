@@ -1,0 +1,77 @@
+Package: PIPE
+Type: Package
+Title: Pleiotropy-driven therapeutic target prediction
+Version: 1.0.0
+Date: 2022-10-19
+Authors@R: c(person("Hai", "Fang", email="fh12355@rjh.com.cn", role=c("aut","cre")))
+Maintainer: Hai Fang <fh12355@rjh.com.cn>
+Depends: R (>= 4.2.0), igraph, ggplot2
+Imports: BiocGenerics, dplyr, forcats, GenomicRanges, ggnetwork, ggrepel, IRanges, magrittr, Matrix, methods, osfr, purrr, readr, stats, stringr, tibble, tidyr, XML, pbapply
+Suggests: coin, foreach, ggraph, ggridges, grid, gridExtra, RColorBrewer, ROCR, ggupset, rtracklayer, Gviz, MASS, dnet, graphics, grDevices, S4Vectors, utils, ggbio, GenomeInfoDb, doParallel, fgsea, scales, supraHex, data.tree, jsonlite
+Description: This package implements pleiotropy-driven therapeutic target prediction, with two components (prioritisation and evaluation). It is capable of ab initio resolving pleiotropic associations (arising from cross-disease genetic findings) for translational use in therapeutic target prioritisation and evaluation. The uniqueness of the PIPE framework is in establishing the link from pleiotropic loci (including those located in the non-coding genome) to candidate target genes; implemented so through leveraging the value of multi-modal regulatory genomic datasets (genomic evidence) and the knowledge of protein interactions (network evidence). Furthermore, it can be used to identifying specific diseases where pleiotropy informs clinical therapeutics, and also the use in determining disease relationships based on the leading prioritisation information. In addition to target gene prioritisation, the PIPE is also unique in identifying a network of highly prioritised genes that mediate crosstalk between molecular pathways, generating a concise and manageable list of target genes at the pathway crosstalk level.
+Collate:
+    'ClassMethod-PIPE.r'
+    'oRDS.r'
+    'oDefineNet.r'
+    'oSM2DF.r'
+    'oNetInduce.r'
+    'oIG2TB.r'
+    'oTB2IG.r'
+    'oPierMatrix.r'
+    'oPierSNPsAdv.r'
+    'oPierSNPs.r'
+    'oSNPscores.r'
+    'oSNP2nGenes.r'
+    'oSNPlocations.r'
+    'oSymbol2GeneID.r'
+    'oSparseMatrix.r'
+    'oPierGenes.r'
+    'oPier.r'
+    'oRWR.r'
+    'oCheckParallel.r'
+    'oSNP2eGenes.r'
+    'oDefineQTL.r'
+    'oSNP2cGenes.r'
+    'oDefineRGB.r'
+    'oGR.r'
+    'oClassifyRF.r'
+    'oClassifyPerf.r'
+    'oClassifyComp.r'
+    'oHeatmap.r'
+    'oColormap.r'
+    'oCombineNet.r'
+    'oGSsimulator.r'
+    'oPierManhattan.r'
+    'oSEAadv.r'
+    'oSEA.r'
+    'oSEAextract.r'
+    'oSEAdotplot.r'
+    'oPierGSEA.r'
+    'oPolarBar.r'
+    'oGSEAdotplot.r'
+    'oTIG.r'
+    'oBiproject.r'
+    'oBicreate.r'
+    'oLayout.r'
+    'oGGnetwork.r'
+    'oBigraph.r'
+    'oAddCoords.r'
+    'oSEAggraph.r'
+    'oGGraph.r'
+    'oDAGinduce.r'
+    'oDAGanno.r'
+    'oDAGclade.r'
+    'oConverter.r'
+    'oPierSubnet.r'
+    'oSubneterGenes.r'
+    'oVisEvidenceAdv.r'
+    'oVisEvidence.r'
+    'oPieplot.r'
+    'oSEAforest.r'
+    'oAttack.r'
+    'oUpsetAdv.r'
+    'oSEAballoon.r'
+    'oSEAupset.r'
+    'oRepurpose.r'
+License: GPL-2
+biocViews: Software, SystemsBiology, FunctionalGenomics, GenePrediction, GeneTarget, Pathways, Network
