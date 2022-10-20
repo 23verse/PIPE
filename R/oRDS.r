@@ -31,6 +31,7 @@
 #' @importFrom tidyr gather spread
 #' @importFrom XML htmlTreeParse xmlGetAttr
 #' @importFrom pbapply pblapply
+#' @importFrom curl curl_download
 #' @seealso \code{\link{oRDS}}
 #' @include oRDS.r
 #' @examples
@@ -101,16 +102,22 @@ oRDS <- function(RDS=NULL, verbose=TRUE, placeholder=NULL, guid=NULL)
 		placeholder <- gsub("/$", "", placeholder)
 		
 		if(grepl("^https?://", placeholder)){
+		
+			#destfile <- base::tempfile('org.Hs.eg.RDS')
+			#load_remote <- "http://www.comptransmed.pro/bigdata_fdb/org.Hs.eg.RDS"
+			#curl::curl_download(load_remote, destfile=destfile)
+			#out <- readRDS(destfile)
+			#base::unlink(destfile)
+		
 			load_remote <- paste0(placeholder, "/", RDS, ".RDS")
-			#if(is(suppressWarnings(try(out <- readRDS(gzcon(url(load_remote))), TRUE)),"try-error")){
-			#z <- gzcon(url(load_remote))
-			z <- url(load_remote)
-			if(is(suppressWarnings(try(out <- readRDS(z), TRUE)),"try-error")){
+			destfile <- base::tempfile(RDS)
+			if(is(suppressWarnings(try(curl::curl_download(load_remote, destfile=destfile), TRUE)),"try-error")){
 				out <- NULL
 			}else{
+				out <- readRDS(destfile)
 				load_RDS <- load_remote
+				base::unlink(destfile)
 			}
-			close(z)
 			#showConnections(all = TRUE)
 			#closeAllConnections()
 
