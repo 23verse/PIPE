@@ -74,6 +74,21 @@ oSEAforest <- function(obj, top=10, adjp.cutoff=0.05,  colormap="brewer.Reds", z
 		df %>% dplyr::semi_join(df_name,by="name") -> df
 	}
 	
+	## text wrap
+	if(!is.null(wrap.width)){
+		width <- as.integer(wrap.width)
+		res_list <- lapply(df$name, function(x){
+			x <- gsub('_', ' ', x)
+			y <- strwrap(x, width=width)
+			if(length(y)>1){
+				paste0(y[1], '...')
+			}else{
+				y
+			}
+		})
+		df$name <- unlist(res_list)
+	}
+	
 	if(sortBy=='or'){
 		df %>% dplyr::filter(adjp<adjp.cutoff) %>% dplyr::arrange(group,onto,namespace,or,name) %>% dplyr::mutate(name=forcats::fct_inorder(name)) -> df
 		
@@ -95,21 +110,6 @@ oSEAforest <- function(obj, top=10, adjp.cutoff=0.05,  colormap="brewer.Reds", z
 	##########################
 	##########################
 
-	## text wrap
-	if(!is.null(wrap.width)){
-		width <- as.integer(wrap.width)
-		res_list <- lapply(df$name, function(x){
-			x <- gsub('_', ' ', x)
-			y <- strwrap(x, width=width)
-			if(length(y)>1){
-				paste0(y[1], '...')
-			}else{
-				y
-			}
-		})
-		df$name <- unlist(res_list)
-	}
-	
 	color <- size <- NULL
 	
 	df$color <- -log10(df$adjp)
@@ -132,6 +132,8 @@ oSEAforest <- function(obj, top=10, adjp.cutoff=0.05,  colormap="brewer.Reds", z
 	
 	df %>% ggplot(aes(y=name, x=log2(or), xmin=log2(CIl), xmax=log2(CIu), color=color)) + geom_pointrange(aes(size=size),shape=shape) -> gp
 	#gp + geom_vline(xintercept=0, color='grey80') -> gp
+	
+	gp <- gp + xlab(expression(log[2]("Odds ratio")))
 	
 	gp <- gp + theme_classic() + theme(legend.position="right", legend.title=element_text(size=7), legend.text=element_text(size=6), axis.title.y=element_blank(), axis.title.x=element_text(size=7), axis.text.y=element_text(size=6,angle=0), axis.text.x=element_text(size=7))
 	gp <- gp + theme(panel.grid.major=element_blank(), panel.grid.minor=element_blank())

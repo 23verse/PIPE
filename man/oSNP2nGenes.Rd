@@ -69,7 +69,7 @@ region will be kept). TAD datasets can be one of "GM12878"
 (lymphoblast), "IMR90" (fibroblast), "MSC" (mesenchymal stem cell)
 ,"TRO" (trophoblasts-like cell), "H1" (embryonic stem cell), "MES"
 (mesendoderm) and "NPC" (neural progenitor cell). Explanations can be
-found at \url{http://dx.doi.org/10.1016/j.celrep.2016.10.061}}
+found at \doi{10.1016/j.celrep.2016.10.061}}
 
 \item{verbose}{logical to indicate whether the messages will be
 displayed in the screen. By default, it sets to true for display}

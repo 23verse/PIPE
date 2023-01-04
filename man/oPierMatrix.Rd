@@ -12,6 +12,7 @@ aggregateBy = c("none", "fishers", "logistic", "Ztransform",
 "orderStatistic",
 "harmonic", "max", "sum"),
 rangeMax = 5,
+keep = TRUE,
 verbose = TRUE,
 placeholder = NULL,
 guid = NULL
@@ -46,6 +47,9 @@ sequentially weighting evidence 'harmonic'}
 
 \item{rangeMax}{the maximum range of the top prioritisation. By
 default, it sets to 5}
+
+\item{keep}{logical to indicate whether the input list_pNode is kept.
+By default, it sets to true to keep}
 
 \item{verbose}{logical to indicate whether the messages will be
 displayed in the screen. By default, it sets to true for display}
@@ -85,7 +89,7 @@ gens), "dGene" (disease genes), "pGene" (phenotype genes), and "fGene"
 each column/predictor for either priority score/rating, or priorty rank
 or priority p-value}
 \item{\code{metag}: an "igraph" object}
-\item{\code{list_pNode}: a list of "pNode" objects}
+\item{\code{list_pNode}: a list of "pNode" objects or NULL}
 }
 }
 \description{

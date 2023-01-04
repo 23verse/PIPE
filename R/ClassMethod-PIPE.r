@@ -128,3 +128,5 @@ print.pNode <- function(x, ...) {
 	cat("$priority:\n")
 	print(x$priority[1:2,], row.names=FALSE)
 }
+
+

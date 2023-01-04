@@ -7,6 +7,7 @@
 #' @param combineBy how to resolve nodes/targets from a list of "pNode" objects. It can be "intersect" for intersecting nodes (by default), "union" for unionising nodes
 #' @param aggregateBy the aggregate method used. It can be either "none" for no aggregation, or "orderStatistic" for the method based on the order statistics of p-values, "fishers" for Fisher's method, "Ztransform" for Z-transform method, "logistic" for the logistic method. Without loss of generality, the Z-transform method does well in problems where evidence against the combined null is spread widely (equal footings) or when the total evidence is weak; Fisher's method does best in problems where the evidence is concentrated in a relatively small fraction of the individual tests or when the evidence is at least moderately strong; the logistic method provides a compromise between these two. Notably, the aggregate methods 'fishers' and 'logistic' are preferred here. Also supported are methods summing up evidence 'sum', taking the maximum of evidence ('max') or sequentially weighting evidence 'harmonic'
 #' @param rangeMax the maximum range of the top prioritisation. By default, it sets to 5
+#' @param keep logical to indicate whether the input list_pNode is kept. By default, it sets to true to keep
 #' @param verbose logical to indicate whether the messages will be displayed in the screen. By default, it sets to true for display
 #' @param placeholder the characters to tell the location of built-in RData files. See \code{\link{oRDS}} for details
 #' @param guid a valid (5-character) Global Unique IDentifier for an OSF project. See \code{\link{oRDS}} for details
@@ -21,7 +22,7 @@
 #'  \item{\code{priority}: a data frame of n X 4+7 containing gene priority (aggregated) information, where n is the number of genes, and the 4 columns are "name" (gene names), "rank" (ranks of the priority scores), "rating" (the 5-star score/rating), "description" (gene description), and 7 seed info columns including "seed" (whether or not seed genes), "nGene" (nearby genes), "cGene" (conformation genes), "eGene" (eQTL gens), "dGene" (disease genes), "pGene" (phenotype genes), and "fGene" (function genes)}
 #'  \item{\code{predictor}: a data frame containing predictor matrix, with each column/predictor for either priority score/rating, or priorty rank or priority p-value}
 #'  \item{\code{metag}: an "igraph" object}
-#'  \item{\code{list_pNode}: a list of "pNode" objects}
+#'  \item{\code{list_pNode}: a list of "pNode" objects or NULL}
 #' }
 #' @note none
 #' @export
@@ -37,7 +38,7 @@
 #' dTarget <- oPierMatrix(ls_pNode, displayBy="pvalue", aggregateBy="fishers")
 #' }
 
-oPierMatrix <- function(list_pNode, displayBy=c("score","rank","weight","pvalue","evidence"), combineBy=c('union','intersect'), aggregateBy=c("none","fishers","logistic","Ztransform","orderStatistic","harmonic","max","sum"), rangeMax=5, verbose=TRUE, placeholder=NULL, guid=NULL)
+oPierMatrix <- function(list_pNode, displayBy=c("score","rank","weight","pvalue","evidence"), combineBy=c('union','intersect'), aggregateBy=c("none","fishers","logistic","Ztransform","orderStatistic","harmonic","max","sum"), rangeMax=5, keep=TRUE, verbose=TRUE, placeholder=NULL, guid=NULL)
 {
 
     startT <- Sys.time()
@@ -244,12 +245,22 @@ oPierMatrix <- function(list_pNode, displayBy=c("score","rank","weight","pvalue"
 				ind <- match(unique(predictor_names), colnames(mat_evidence))
 			}
 			priority <- data.frame(df_priority[,c("name","rank","rating","description")], seed=ifelse(overall!=0,'Y','N'), mat_evidence[,ind[!is.na(ind)]], stringsAsFactors=FALSE)
-			dTarget <- list(priority  = priority,
-							predictor = df_predictor,
-							metag	  = metag,
-							list_pNode  = list_pNode
-						 )
-			class(dTarget) <- "dTarget"
+			
+			if(keep){
+				dTarget <- list(priority  = priority,
+								predictor = df_predictor,
+								metag	  = metag,
+								list_pNode  = list_pNode
+							 )
+				class(dTarget) <- "dTarget"
+			}else{
+				dTarget <- list(priority  = priority,
+								predictor = df_predictor,
+								metag	  = metag,
+								list_pNode  = NULL
+							 )
+				class(dTarget) <- "dTarget"
+			}
 			
 			df_predictor <- dTarget
 		}
@@ -345,12 +356,22 @@ oPierMatrix <- function(list_pNode, displayBy=c("score","rank","weight","pvalue"
 				ind <- match(unique(predictor_names), colnames(mat_evidence))
 			}
 			priority <- data.frame(df_priority[,c("name","rank","rating","description")], seed=ifelse(overall!=0,'Y','N'), mat_evidence[,ind[!is.na(ind)]], stringsAsFactors=FALSE)
-			dTarget <- list(priority  = priority,
-							predictor = df_predictor,
-							metag	  = metag,
-							list_pNode  = list_pNode
-						 )
-			class(dTarget) <- "dTarget"
+			
+			if(keep){
+				dTarget <- list(priority  = priority,
+								predictor = df_predictor,
+								metag	  = metag,
+								list_pNode  = list_pNode
+							 )
+				class(dTarget) <- "dTarget"
+			}else{
+				dTarget <- list(priority  = priority,
+								predictor = df_predictor,
+								metag	  = metag,
+								list_pNode  = NULL
+							 )
+				class(dTarget) <- "dTarget"
+			}
 			
 			df_predictor <- dTarget
 		}

@@ -51,7 +51,7 @@ oConverter(g, from='igraph', to='dgCMatrix')
 \dontrun{
 # Conversion between 'dgCMatrix' and 'igraph'
 # ig.EF (an object of class "igraph" storing as a directed graph)
-g <- xRDataLoader('ig.EF')
+g <- oRDS('ig.EF', placeholder=placeholder)
 g
 
 # convert the object from 'igraph' to 'dgCMatrix' class
